@@ -1,3 +1,4 @@
+# This is a really dumb exercise
 import sys
 script, encoding, error = sys.argv
 
