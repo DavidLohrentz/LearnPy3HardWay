@@ -43,8 +43,8 @@ def torture():
     print("\n\nPunkinHead thoroughly tortured! Yippeee\n")
 
 def ask():
-    a = input("\nTorture PunkinHead or watch him eat shit or be smashed by oni? \nType 'shit', 'oni' or 'torture' >>> ")
-    if a == "shit":
+    a = input("\nTorture PunkinHead or watch him eat shit or be smashed by oni? \nType 'poop', 'oni' or 'torture' >>> ")
+    if a == "poop":
         eat_shit_punkinhead(x)
 
     elif a == "oni":
