@@ -8,12 +8,14 @@ def sort_words(words):
     return sorted(words)
 
 def print_first_word(words):
-    """Prints the first word after popping it off."""
+    """Prints the first word after popping it off.
+    pop(0) pops the first item, pop(1) the second and so on."""
     word = words.pop(0)
     print(word)
 
 def print_last_word(words):
-    """Prints the last word after popping it off."""
+    """Prints the last word after popping it off.
+    pop(-1) pops the last item, (-2) the 2nd from last and so on."""
     word = words.pop(-1)
     print(word)
 
