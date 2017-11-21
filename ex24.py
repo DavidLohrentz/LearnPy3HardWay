@@ -26,7 +26,7 @@ def secret_formula(started):
     return jelly_beans, jars, crates
 
 
-start_point = 10000
+start_point = 100000
 beans, jars, crates = secret_formula(start_point)
 
 #remember that this is another way to format a string
