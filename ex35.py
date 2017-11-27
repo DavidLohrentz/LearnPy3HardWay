@@ -67,7 +67,7 @@ def dead(why):
 
 def start():
     print("\nYou are in a dark room.")
-    print("There is a door to your right and left.")
+    print("There are doors to your right and left, and a trap door below.")
     print("Which one do your take?")
 
     choice = input("\n>>> ")
@@ -76,8 +76,24 @@ def start():
         bear_room()
     elif choice == "right":
         cthulhu_room()
+    elif "trap" in choice:
+        basement()
     else:
         dead("You stumble around the room until you starve.")
+
+def basement():
+    print("\nTom Crean is there in a clown suit doing card tricks. He asks you to pick a card.")
+    print("What card do you pick?")
+
+    choice = (input(">>> "))
+
+    if "king" in choice.lower() or "ace" in choice.lower() or "queen" in choice.lower() or "jack" in choice.lower():
+        print("You picked a face card. Kick Tom Crean in the balls and you win.")
+        exit(0)
+    else:
+        print("You didn't pick a face card so you lose.")
+        print("However, if you fart on Clappy the Clown, you win.")
+        exit(0)
 
 
 start()
