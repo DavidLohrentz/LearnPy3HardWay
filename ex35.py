@@ -6,8 +6,6 @@ def gold_room():
 
     choice = input("\n>>> ")
 
-
-    newchoice = list(choice)
     goldnum = []
     a = ""
     for i in list(choice):
