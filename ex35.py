@@ -1,20 +1,28 @@
+#!/usr/bin/python3
 from sys import exit
 
 def gold_room():
     print("\nThis room is full of gold. How much do you take?")
 
     choice = input("\n>>> ")
-    if "0" in choice or "1" in choice:
-        how_much = int(choice)
-    else:
-        dead("Dude, learn to type a number.")
 
-    if how_much < 50:
-        print("Nice, you're not greedy; you win.")
+
+    newchoice = list(choice)
+    goldnum = []
+    a = ""
+    for i in list(choice):
+        if i.isdigit():
+            goldnum.append(i)
+    cooked = a.join(goldnum)
+    n = len(cooked)
+    if n == 0:
+        print("\nInclude a number in your answer, dumbass.")
+        gold_room()
+    elif int(cooked) < 100:
+        print(f"{cooked} is a nice low number. You win.")
         exit(0)
     else:
-        dead("You greedy bastard!")
-
+        dead(f"You greedy bastard. {cooked} is too high for you to win.")
 
 def bear_room():
     print("\nThere is a bear here.")
