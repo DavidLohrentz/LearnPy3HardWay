@@ -17,10 +17,12 @@ def gold_room():
         print("\nInclude a number in your answer, dumbass.")
         gold_room()
     elif int(cooked) < 100:
-        print(f"{cooked} is a nice low number. You win.")
+        print(f"{cooked} is the winning number this time. Congratulations.")
         exit(0)
     else:
-        dead(f"You greedy bastard. {cooked} is too high for you to win.")
+        under_cooked = int(cooked) - 1
+        dead(f"Too bad. {under_cooked} was the winning number this time.")
+        print("Tom Crean will now come up through the trap door and talk at you until you die of boredom.")
 
 def bear_room():
     print("\nThere is a bear here.")
@@ -62,7 +64,7 @@ def cthulhu_room():
 
 
 def dead(why):
-    print(why, "Good job!")
+    print(why, "You have been a great contestant, but now you must deal with Clappy the Clown.")
     exit(0)
 
 def start():
@@ -92,7 +94,7 @@ def basement():
         exit(0)
     else:
         print("You didn't pick a face card so you lose.")
-        print("However, if you fart on Clappy the Clown, you win.")
+        print("However, if you fart on Clappy the Clown, you can escape.")
         exit(0)
 
 
