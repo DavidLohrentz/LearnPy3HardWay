@@ -2,8 +2,34 @@
 import time
 from sys import exit
 from random import randint
-
+import os
     # make a list of dooshbags from dooshlist.txt filed
+
+global tool_list
+tool_list = ["swimming pool noodle", "zombie arm", "flower bouquet", "baguette",
+"tennis racket", "garden hose", "jellyfish", "cactus", "porcupine", "catfish",
+"cheese grater", "fettucini", "chainsaw", "zuccini", "pillow", "Pussy Willow",
+"kielbasa", "compost pile", "pencil", "midget", "scarecrow", "slipper", "feather", "woodchuck"]
+
+def file_accessible(filepath, mode):
+    # check if a file exists and is accessible.
+    try:
+        f = open(filepath, mode)
+        f.close()
+    except IOError as e:
+        return False
+    return True
+
+dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
+if dooshlist_accessible == True:
+    print("The necessary 'dooshlist.txt file exists in this directory.")
+else:
+    print("To use this file you need to create a txt file named 'dooshlist.txt'.")
+    time.sleep(2.5)
+    print("Put that file in the same directory as this file and add one doosh per line.")
+    time.sleep(2)
+    print("The more the merrier.")
+    exit(0)
 
 def add_doosh(new_doosh):
     new_doosh = new_doosh + '\n'
@@ -28,10 +54,6 @@ def doosh_generator():
     return random_doosh, initials
 
 def tool_generator():
-    tool_list = ["swimming pool noodle", "zombie arm", "flower bouquet", "baguette",
-    "tennis racket", "garden hose", "jellyfish", "cactus", "porcupine", "catfish",
-    "cheese grater", "fettucini", "chainsaw", "cucumber", "pillow", "Pussy Willow",
-    "kielbasa", "compost pile", "pencil"]
     c = len(tool_list) - 1
     global random_tool
     a = randint(0,c)
@@ -43,7 +65,8 @@ def tool_generator():
     return random_tool, tool_initials
 
 def snake_generator():
-    snake_list = ["rattlesnake", "king cobra", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake"]
+    snake_list = ["rattlesnake", "king cobra", "black mamba", "death adder", "puff adder", "spitting cobra",
+    "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan"]
     c = len(snake_list) - 1
     global random_snake
     a = randint(0,c)
@@ -58,7 +81,7 @@ def status_generator():
     global random_status
     status_list = [["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"],
     ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"],
-    ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"]]
+    ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["epic", "dwarfish"]]
     c = len(status_list) - 1
 
     global random_status1
@@ -79,7 +102,7 @@ def dream():
     print("\nAfter a demoralizing day at work you go out on the town with your sketchiest friend.\n")
     time.sleep(2.5)
     booze = input("How many drinks did you have?  ")
-
+    global drunkenness
     goldnum = []
     a = ""
     for i in list(booze):
@@ -131,13 +154,15 @@ def tool_pick(drunkenness):
         smack(random_tool, status, drunkenness)
     elif your_pick == "n" or your_pick == "no":
         second_tool(drunkenness)
-    else:
+    elif your_pick != "n" and your_pick != "y":
         print("Dude, wtf? Try again.\n")
         tool_pick(drunkenness)
+    else:
+        exit(0)
 
 def second_tool(drunkenness):
-    print("\nYou have arrived at second_tool function.") # debug
-    pause_here = input("Stopping before the problem. Hit return to continue.")
+    # print("\nYou have arrived at second_tool function.") # debug
+    # pause_here = input("Stopping before the problem. Hit return to continue.")
     random_tool2, tool_initial2 = tool_generator()
 
 #    time.sleep(2)
@@ -149,16 +174,18 @@ def second_tool(drunkenness):
     #print(f"your_pick is \'{your_pick}\'.") #debug
     if your_pick == "y" or your_pick == "yes":
         newstatus1, newstatus2, newinitial1, newinitial2 = status_generator()
-        print(f"""\n\nChose one: \n{newstatus1} {random_tool2} ({newinitial1})
-        \n{newstatus2} {random_tool2} ({newinitial2})""")
+        print(f"\n\nChose one: \n{newstatus1} {random_tool2} ({newinitial1})")
+        print(f"{newstatus2} {random_tool2} ({newinitial2})")
         status_answer = input("\n >>> ")
 
         if status_answer == newinitial1:
             status = newstatus1
         elif status_answer == newinitial2:
             status = newstatus2
-        else:
+        elif status_answer != newinitial1 and status_answer != newinitial2:
             status = "dipshit"
+        else:
+            exit(0)
         smack(random_tool2, status, drunkenness)
     elif your_pick == "n" or your_pick == "no":
         snake_tool(drunkenness)
@@ -166,8 +193,11 @@ def second_tool(drunkenness):
         print("Dude, wtf? Try again.\n")
         second_tool(drunkenness)
 
-def broken_zuc(whack, tool, status, drunkenness):
-    print("You have arrived at broken_zuc function.")
+def popup2(whack, tool, status, drunkenness):
+    print("You have arrived at popup2 function.") #debug
+    print("Congratulations! Now that you have made it this far, you get to pick your own whacking tool.")
+    b = input("Your new whacking tool:  ")
+    tool = b
     print(whack, tool, status, drunkenness)
     exit(0)
 
@@ -175,17 +205,33 @@ def smack(tool, status, drunkenness):
     print("You have arrived at the smack function.") #debug
     time.sleep(2)
     print(f"\ntool: {tool} \nstatus: {status} \ndrunkenness: {drunkenness}\n\n") #debug
+    global initials
+    global random_doosh
     random_doosh, initials = doosh_generator()
     time.sleep(2)
     print(f"The heads of {random_doosh} and Chuck Norris pop up.\n")
     time.sleep(2)
     whack = input(f"Who do you whack?\n{random_doosh} ({initials})\nChuck Norris (cn)\n>>> ")
-    print(f"You whack {whack}.")
+    # print(f"You whack {whack}.") #debug
 
-    if drunkenness == "sloshed" and whack == initials:
-        print("You fall over in a drunken stupor.")
+    if status == "dipshit":
+        print("You failed to answer correctly. Let this be a lesson to you.")
         time.sleep(2)
-        print(f"Meanwhile, {random_doosh} and Chuck Norris fight to the death.\n")
+        print(f"{random_doosh} and Chuck Norris take away your {tool} and whack you until you have no arms or legs.\n")
+        exit(0)
+    elif drunkenness == "sloshed":
+        sloshedwhack(whack, tool, status)
+    elif drunkenness == "buzzed":
+        buzzedwhat(whack, tool, status)
+    elif drunkenness == "none":
+        teetotalwhack(whack, tool, status)
+    else:
+        print("Drunk error")
+        exit(0)
+
+def sloshedwhack(whack, tool, status):
+    if whack == initials:
+        print("After you fall down drunk, {random_doosh} and Chuck Norris fight to the death.\n")
         time.sleep(2)
         print(f"Getting drunk and attempting to whack {random_doosh} with a {tool} was the winning answer.\n")
         time.sleep(1)
@@ -197,51 +243,38 @@ def smack(tool, status, drunkenness):
         print(f"For a successful life, continue to drink heavily and whack random celebrity dooshbags with a {tool}.")
         exit(0)
 
-    elif status == "dipshit":
-        print("You failed to answer correctly. Let this be a lesson to you.")
-        time.sleep(2)
-        print(f"{random_doosh} and Chuck Norris take away your {tool} and whack you until you have no arms or legs.\n")
-        exit(0)
-
-    elif whack == initials and tool == "zuccini" and status == "long" and drunkenness == "none":
-        print(whack, tool, status, drunkenness)
-        print(f"You whacked {random_doosh} so hard that your {tool} broke in half.")
-        time.sleep(2)
-        print(f"{random_doosh} staggers away in fear.\n")
-        status = "short"
-        whack = "cn"
-        broken_zuc(whack, tool, status, drunkenness)
-
-    elif whack == initials and tool == "zuccini" and status == "short" and drunkenness == "none":
-        print(whack, tool, status, drunkenness)
-        print(f"Congratulations! Short zuccini are {random_doosh}\'s Kryptonite.\n")
-        time.sleep(2)
-        print(f"{random_doosh} falls back down into the hole. Goodbye {random_doosh}.\n")
-        status = "short"
-        whack = "cn"
-        broken_zuc(whack, tool, status, drunkenness)
-
-    elif whack == initials and tool == "zuccini" and status == "short" and drunkenness == "buzzed":
-        print(whack, tool, status, drunkenness)
-        print(f"Congratulations! Short zuccini are {random_doosh}\'s Kryptonite.\n")
-        time.sleep(2)
-        print(f"{random_doosh} falls back down into the hole while you piss on his head.\n")
-        status = "short"
-        whack = "cn"
-        broken_zuc(whack, tool, status, drunkenness)
-
-    elif whack == "cn" and tool == "zuccini" and status == "long" and drunkenness == "none":
-        print(whack, tool, status, drunkenness)
-        print("Before you can whack him, Chuck Norris breaks your zuccini in half with a roundhouse kick.")
-        time.sleep(2)
-        print(f"You failed to eliminate Cuck Norris. However he gets rid of {random_doosh} with a roundhouse kick.\n")
-        status = "short"
-        broken_zuc(whack, tool, status, drunkenness)
+    elif whack == "cn":
+        print("Nobody takes on Chuck Norris when they are drunk.")
+        print("He roundhouse kicks your head out through your ass, and now you are sort of inside out.")
+        popup2('cn', tool, status, drunkenness)
 
     else:
-        print("Error")
-        print(f"Have not built whack == {whack}, tool == {tool}, status == {status} & drunkenness == {drunkenness}.")
+        print('sloshed error')
         exit(0)
+
+def teetotalwhack(whack, tool, status):
+    if whack == initials:
+        print(f"Good thing you were sober, dealing with {random_doosh} AND Chuck Norris.")
+        print(f"You whacked {random_doosh} so hard that you broke your {tool} in half.")
+        time.sleep(2)
+        print(f"{random_doosh} staggers away in fear.\n")
+        print(f"Good luck with half of a {tool} in the next round.")
+        status = "short"
+        whack = "cn"
+        popup2(whack, tool, status, drunkenness)
+
+    elif whack == "cn":
+        print(f"Chuck Norris has a Kryptonite and it is {status} {tool}s.")
+        time.sleep(2)
+        print(f"He becomes to weak to roundhouse kick and you whack him six feet under with your {tool}.\n")
+        whack = random_doosh
+        popup2(whack, tool, status, drunkenness)
+
+    else:
+        print("teetotal error")
+        exit(0)
+
+
 
 def snake_tool(drunkenness):
     print("You have arrived at the snake_tool function.") #debug
