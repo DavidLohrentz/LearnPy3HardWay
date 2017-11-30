@@ -6,10 +6,8 @@ import os
     # make a list of dooshbags from dooshlist.txt filed
 
 global tool_list
-tool_list = ["swimming pool noodle", "zombie arm", "flower bouquet", "baguette",
-"tennis racket", "garden hose", "jellyfish", "cactus", "porcupine", "catfish",
-"cheese grater", "fettucini", "chainsaw", "zuccini", "pillow", "Pussy Willow",
-"kielbasa", "compost pile", "pencil", "midget", "scarecrow", "slipper", "feather", "woodchuck"]
+global tool_to_check
+
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -18,18 +16,37 @@ def file_accessible(filepath, mode):
         f.close()
     except IOError as e:
         return False
-    return True
 
-dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
-if dooshlist_accessible == True:
-    print("The necessary 'dooshlist.txt file exists in this directory.")
-else:
-    print("To use this file you need to create a txt file named 'dooshlist.txt'.")
-    time.sleep(2.5)
-    print("Put that file in the same directory as this file and add one doosh per line.")
-    time.sleep(2)
-    print("The more the merrier.")
-    exit(0)
+def check_if_files_exist():
+    dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
+    tool_list_accessible = file_accessible('tool_list.txt', 'r')
+    if dooshlist_accessible == True and tool_list_accessible == True:
+        print("The necessary list files exists in this directory.")
+    elif dooshlist_accessible == False and tool_list_accessible == False:
+        print("\nTo use this file, you need to create two support files.")
+        time.sleep(2)
+        print("You need to create a txt file named 'dooshlist.txt' and another named tool_list.txt.")
+        print("Put them in this directory and load them up, one item per line.")
+        exit(0)
+
+    elif dooshlist_accessible == True and tool_list_accessible == False:
+        print("To use this file you need to create a txt file named 'tool_list.txt'.")
+        time.sleep(2.5)
+        print("Put that file in the same directory as this file and add one whacking tool per line.")
+        time.sleep(2)
+        print("The more the merrier.")
+        exit(0)
+
+    elif dooshlist_accessible == False and tool_list_accessible == True:
+        print("To use this file you need to create a txt file named 'dooshlist.txt'.")
+        time.sleep(2.5)
+        print("Put that file in the same directory as this file and add one doosh per line.")
+        time.sleep(2)
+        print("The more the merrier.")
+        exit(0)
+    else:
+        print("File accessibility test failure")
+        exit(0)
 
 def add_doosh(new_doosh):
     new_doosh = new_doosh + '\n'
@@ -39,25 +56,34 @@ def add_doosh(new_doosh):
     file.close()
     return new_doosh
 
+def add_tool(new_tool):
+    new_tool = new_tool + '\n'
+    f = 'tool_list.txt'
+    file = open(f, 'a+')
+    file.write(new_tool)
+    file.close()
+    return new_tool
 
 def doosh_generator():
     mylist = open("dooshlist.txt").readlines()
     c = len(mylist) - 1
-    print(f"number of dooshes in doooshlist is {c}.")
+    print(f"number of dooshes in doooshlist is {c}.") # debug
     a = randint(0,c)
     b = mylist[a]
     random_doosh = b.rstrip()
-    print(f"random_doosh is {random_doosh}")
+    print(f"random_doosh is {random_doosh}") # debug
     initials = ''.join(name[0].lower() for name in b.split())
     # print(f"\nRandom doosh is {random_doosh} & initials are {initials}.") # debug line
     # print(f"\n{c} dooshes in doosh list.") # debug line
     return random_doosh, initials
 
 def tool_generator():
+    tool_list= open('tool_list.txt').readlines()
     c = len(tool_list) - 1
     global random_tool
     a = randint(0,c)
     random_tool = tool_list[a]
+    random_tool = random_tool.rstrip()
 
     global tool_initials
     tool_initials = ''.join(name[0].lower() for name in random_tool.split())
@@ -81,7 +107,8 @@ def status_generator():
     global random_status
     status_list = [["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"],
     ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"],
-    ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["epic", "dwarfish"]]
+    ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["epic", "dwarfish"],
+    ["putrid", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"]]
     c = len(status_list) - 1
 
     global random_status1
@@ -98,10 +125,13 @@ def status_generator():
 
     return random_status1, random_status2, status1_initials, status2_initials
 # ---------------------------------------------------------------
+# check_if_files_exist()
 def dream():
-    print("\nAfter a demoralizing day at work you go out on the town with your sketchiest friend.\n")
+    global sketchy_friend
+    sketchy_friend = input("Who is your sketchiest friend?   ")
+    print(f"\nAfter a demoralizing day at work you go out on the town with {sketchy_friend}.\n")
     time.sleep(2.5)
-    booze = input("How many drinks did you have?  ")
+    booze = input(f"How many drinks did you have with {sketchy_friend}?  ")
     global drunkenness
     goldnum = []
     a = ""
@@ -126,10 +156,9 @@ def dream():
 
     # this works, but slows down testing so is commented out
     #add_doosh()
-    laugher, initials = doosh_generator()
     print("In front of you is the game of Celebrity Dooshbag Whackamole.\n")
     time.sleep(2.5)
-    print(f"{laugher} is laughing at you and telling you to \'select your whacking tool.\'\n")
+    print(f"{sketchy_friend} is laughing at you to \'select your whacking tool.\'\n")
     time.sleep(3)
     print("You will receive three whacking tool options, picking yes or no, one at a time.\n")
     #time.sleep(2.5)
@@ -159,12 +188,18 @@ def tool_pick(drunkenness):
         tool_pick(drunkenness)
     else:
         exit(0)
+def check_tool(tool_to_check):
+    if tool_to_check == random_tool:
+        random_tool2, tool_initial2 = tool_generator()
+        return random_tool2, tool_initial2
+    else:
+        return random_tool2, tool_initial2
 
 def second_tool(drunkenness):
     # print("\nYou have arrived at second_tool function.") # debug
     # pause_here = input("Stopping before the problem. Hit return to continue.")
     random_tool2, tool_initial2 = tool_generator()
-
+    check_tool(random_tool2)
 #    time.sleep(2)
     print(f"""The second whacking tool option is a {random_tool2}. Do you take it?\n
     y) yes
@@ -195,10 +230,16 @@ def second_tool(drunkenness):
 
 def popup2(whack, tool, status, drunkenness):
     print("You have arrived at popup2 function.") #debug
-    print("Congratulations! Now that you have made it this far, you get to pick your own whacking tool.")
-    b = input("Your new whacking tool:  ")
-    tool = b
-    print(whack, tool, status, drunkenness)
+    if status == "short" or status != "melted":
+        print("Put short or melted tool stuff here")
+    elif status != "short" or status != "melted":
+        print("Congratulations! Now that you have made it this far, you get to pick your own whacking tool.")
+        b = input("Your new whacking tool:  ")
+        add_tool(b)
+        tool = b
+    else:
+        exit(0)
+    print("The end.")
     exit(0)
 
 def smack(tool, status, drunkenness):
@@ -222,7 +263,7 @@ def smack(tool, status, drunkenness):
     elif drunkenness == "sloshed":
         sloshedwhack(whack, tool, status)
     elif drunkenness == "buzzed":
-        buzzedwhat(whack, tool, status)
+        buzzedwhack(whack, tool, status)
     elif drunkenness == "none":
         teetotalwhack(whack, tool, status)
     else:
@@ -231,7 +272,7 @@ def smack(tool, status, drunkenness):
 
 def sloshedwhack(whack, tool, status):
     if whack == initials:
-        print("After you fall down drunk, {random_doosh} and Chuck Norris fight to the death.\n")
+        print(f"After you fall down drunk, {random_doosh} and Chuck Norris fight to the death.\n")
         time.sleep(2)
         print(f"Getting drunk and attempting to whack {random_doosh} with a {tool} was the winning answer.\n")
         time.sleep(1)
@@ -251,6 +292,34 @@ def sloshedwhack(whack, tool, status):
     else:
         print('sloshed error')
         exit(0)
+
+def buzzedwhack(whack, tool, status):
+    if whack == initials:
+        time.sleep(1.5)
+        print(f"{random_doosh} has a {tool} fetish.\n")
+        time.sleep(2)
+        print(f"Every time you whack {random_doosh} with your {tool}, {random_doosh} says:")
+        time.sleep(1.5)
+        print("\'Thank you sir, may I have another\'.\n")
+        time.sleep(2)
+        print(f"Eventually, he takes half of your {tool} so he can sleep with it under his pillow.\n")
+        time.sleep(2)
+        status = "short"
+        whack = random_doosh
+        popup2(whack, tool, status, drunkenness)
+
+    elif whack == "cn":
+        print(f"Chuck Norris is not afraid of {tool}s.")
+        time.sleep(2)
+        print(f"He stares down your {tool} until it melts.\n")
+        whack = "cn"
+        status = "melted"
+        popup2(whack, tool, status, drunkenness)
+
+    else:
+        print("teetotal error")
+        exit(0)
+
 
 def teetotalwhack(whack, tool, status):
     if whack == initials:
