@@ -7,7 +7,10 @@ import os
 
 global tool_list
 global tool_to_check
+global fetish_scream_list
 
+fetish_scream_list = ["Thank you sir, may I have another.", "Please, I'm begging you, don't stop.",
+"Heaven. I'm in heaven.", "Pour hot wax on me while you whack me!"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -20,6 +23,7 @@ def file_accessible(filepath, mode):
 def check_if_files_exist():
     dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
     tool_list_accessible = file_accessible('tool_list.txt', 'r')
+
     if dooshlist_accessible == True and tool_list_accessible == True:
         print("The necessary list files exists in this directory.")
     elif dooshlist_accessible == False and tool_list_accessible == False:
@@ -64,18 +68,36 @@ def add_tool(new_tool):
     file.close()
     return new_tool
 
+def fetish_scream_generator():
+    g  = fetish_scream_list
+    c = len(g) - 1
+    a = randint(0, c)
+    screamthis = g[a]
+    return screamthis
+
 def doosh_generator():
     mylist = open("dooshlist.txt").readlines()
     c = len(mylist) - 1
-    print(f"number of dooshes in doooshlist is {c}.") # debug
-    a = randint(0,c)
+    a = randint(0, c)
     b = mylist[a]
     random_doosh = b.rstrip()
-    print(f"random_doosh is {random_doosh}") # debug
     initials = ''.join(name[0].lower() for name in b.split())
     # print(f"\nRandom doosh is {random_doosh} & initials are {initials}.") # debug line
     # print(f"\n{c} dooshes in doosh list.") # debug line
     return random_doosh, initials
+
+def mood_generator():
+    mood_list= open('moods.txt').readlines()
+    c = len(mood_list) - 1
+    global random_mood
+    a = randint(0,c)
+    random_mood = mood_list[a]
+    random_mood = random_mood.rstrip()
+
+    global mood_initials
+    mood_initials = ''.join(name[0].lower() for name in random_mood.split())
+
+    return random_mood, mood_initials
 
 def tool_generator():
     tool_list= open('tool_list.txt').readlines()
@@ -131,6 +153,8 @@ def dream():
     sketchy_friend = input("Who is your sketchiest friend?   ")
     print(f"\nAfter a demoralizing day at work you go out on the town with {sketchy_friend}.\n")
     time.sleep(2.5)
+    drinks()
+def drinks():
     booze = input(f"How many drinks did you have with {sketchy_friend}?  ")
     global drunkenness
     goldnum = []
@@ -142,14 +166,20 @@ def dream():
     n = len(cooked)
     if n == 0:
         print("\nInclude a number in your answer, dumbass.")
-        dream()
+        drinks()
+    elif int(cooked) < 0:
+        print("\nYo! Enter a number greater than zero.")
+        drinks()
     elif int(cooked) == 0:
         drunkenness = "none"
     elif int(cooked) < 5:
         drunkenness = "buzzed"
-    else:
+    elif int(cooked) >= 5:
         drunkenness = "sloshed"
-    print("You fall into a deep sleep and begin to dream.\n")
+    else:
+        print("Code problem calculating drunk conditional")
+        exit(0)
+    print(f"After you have {cooked} drinks with {sketchy_friend}, you fall into a deep sleep and begin to dream.\n")
     time.sleep(2.5)
     print("You find yourself at an arcade game room.")
     time.sleep(2)
@@ -158,6 +188,7 @@ def dream():
     #add_doosh()
     print("In front of you is the game of Celebrity Dooshbag Whackamole.\n")
     time.sleep(2.5)
+
     print(f"{sketchy_friend} is laughing at you to \'select your whacking tool.\'\n")
     time.sleep(3)
     print("You will receive three whacking tool options, picking yes or no, one at a time.\n")
@@ -166,7 +197,7 @@ def dream():
 
 def tool_pick(drunkenness):
     random_tool, tool_initials = tool_generator()
-    your_pick = input(f"Your first whacking option is a {random_tool}. Do you take this whacking tool?\ny) yes\nn) no\t")
+    your_pick = input(f"Your first whacking option is a {random_tool}. Do you take this whacking tool?\ny) yes\nn) no\n>>> ")
 
     # print(f"your_pick is \'{your_pick}\'.") #debug
     if your_pick == "y" or your_pick == "yes":
@@ -201,10 +232,8 @@ def second_tool(drunkenness):
     random_tool2, tool_initial2 = tool_generator()
     check_tool(random_tool2)
 #    time.sleep(2)
-    print(f"""The second whacking tool option is a {random_tool2}. Do you take it?\n
-    y) yes
-    n) no\n\t""")
-    your_pick = input(">>> ")
+
+    your_pick = input(f"Your second whacking tool option is a {random_tool2}. Do you take this whacking tool?\ny) yes\nn) no\n>>> ")
 
     #print(f"your_pick is \'{your_pick}\'.") #debug
     if your_pick == "y" or your_pick == "yes":
@@ -243,16 +272,16 @@ def popup2(whack, tool, status, drunkenness):
     exit(0)
 
 def smack(tool, status, drunkenness):
-    print("You have arrived at the smack function.") #debug
-    time.sleep(2)
-    print(f"\ntool: {tool} \nstatus: {status} \ndrunkenness: {drunkenness}\n\n") #debug
     global initials
     global random_doosh
     random_doosh, initials = doosh_generator()
     time.sleep(2)
+    random_doosh_mood, a = mood_generator()
     print(f"The heads of {random_doosh} and Chuck Norris pop up.\n")
     time.sleep(2)
-    whack = input(f"Who do you whack?\n{random_doosh} ({initials})\nChuck Norris (cn)\n>>> ")
+    print(f"{random_doosh} is more {random_doosh_mood} than usual.\n")
+    time.sleep(2)
+    whack = input(f"Who do you whack with your {status} {tool}?\n{random_doosh_mood} {random_doosh} ({initials})\nChuck Norris (cn)\n>>> ")
     # print(f"You whack {whack}.") #debug
 
     if status == "dipshit":
@@ -286,7 +315,7 @@ def sloshedwhack(whack, tool, status):
 
     elif whack == "cn":
         print("Nobody takes on Chuck Norris when they are drunk.")
-        print("He roundhouse kicks your head out through your ass, and now you are sort of inside out.")
+        print("He roundhouse kicks your head out through your ass, and now you are permanently inside out.")
         popup2('cn', tool, status, drunkenness)
 
     else:
@@ -296,13 +325,14 @@ def sloshedwhack(whack, tool, status):
 def buzzedwhack(whack, tool, status):
     if whack == initials:
         time.sleep(1.5)
-        print(f"{random_doosh} has a {tool} fetish.\n")
+        print(f"Lucky for you, {random_doosh} has a {tool} fetish.\n")
         time.sleep(2)
-        print(f"Every time you whack {random_doosh} with your {tool}, {random_doosh} says:")
+        print(f"Every time you whack {random_doosh} with your {tool}, {random_doosh} screams:")
+        screamthis = fetish_scream_generator()
         time.sleep(1.5)
-        print("\'Thank you sir, may I have another\'.\n")
+        print(f"\'{screamthis}\'\n")
         time.sleep(2)
-        print(f"Eventually, he takes half of your {tool} so he can sleep with it under his pillow.\n")
+        print(f"{random_doosh} bites your {tool} in half and takes it home to sleep with at night.\n")
         time.sleep(2)
         status = "short"
         whack = random_doosh
@@ -323,11 +353,14 @@ def buzzedwhack(whack, tool, status):
 
 def teetotalwhack(whack, tool, status):
     if whack == initials:
-        print(f"Good thing you were sober, dealing with {random_doosh} AND Chuck Norris.")
+        print(f"Good thing you were sober, dealing with {random_doosh} AND Chuck Norris.\n")
+        time.sleep(2)
         print(f"You whacked {random_doosh} so hard that you broke your {tool} in half.")
         time.sleep(2)
-        print(f"{random_doosh} staggers away in fear.\n")
-        print(f"Good luck with half of a {tool} in the next round.")
+        print(f"{random_doosh} staggers away, never to be seen again.\n")
+        time.sleep(1)
+        print(f"Good luck with half of a {tool} in the next round.\n")
+        time.sleep(2)
         status = "short"
         whack = "cn"
         popup2(whack, tool, status, drunkenness)
@@ -346,10 +379,12 @@ def teetotalwhack(whack, tool, status):
 
 
 def snake_tool(drunkenness):
-    print("You have arrived at the snake_tool function.") #debug
+    # print("You have arrived at the snake_tool function.") #debug
     time.sleep(1)
     get_snake, snake_initials = snake_generator()
-    print(f"Congratulations! You get to do your whacking with a large {get_snake}.\n")
+    print(f"\nCongratulations!")
+    time.sleep(2)
+    print(f"You have won the opportunity to do your whacking with a large {get_snake}.\n")
     time.sleep(2.5)
     end = input("""Do you grab it from the head or the tail?
     h) head
