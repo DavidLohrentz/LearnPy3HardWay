@@ -1,7 +1,7 @@
 # Whackamole
 import time
 from sys import exit
-from random import choice
+from random import choice, randint
 import os
     # make a list of dooshbags from dooshlist.txt filed
 
@@ -14,7 +14,7 @@ global friend_type
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
 friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate"]
 
-def file_accessible(filepath, mode)
+def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
     try:
         f = open(filepath, mode)
@@ -130,7 +130,9 @@ def dream():
     friend_type = friend_type_generator()
     global friend_name
     friend_name = input(f"Who is your {friend_type} friend?   ")
-    print(f"\nAfter {random_word} day at work you go out on the town with {friend_name}.\n")
+    joke = rand_joke()
+    print(joke)
+    print(f"\nAfter a {random_word} day at work you go out on the town with {friend_name}.\n")
     time.sleep(2.5)
     drinks()
 
@@ -204,6 +206,13 @@ def check_tool(tool_to_check):
         return random_tool2, tool_initial2
     else:
         return random_tool2, tool_initial2
+
+def rand_joke():
+    a = randint(0, 20)
+    if a == 0:
+        return "We checked your references and it seems you have no friends. We'll pretend you do have one."
+    else:
+        return ""
 
 def second_tool(drunkenness):
     # print("\nYou have arrived at second_tool function.") # debug
