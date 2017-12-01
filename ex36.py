@@ -22,34 +22,28 @@ def file_accessible(filepath, mode):
 def check_if_files_exist():
     dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
     tool_list_accessible = file_accessible('tool_list.txt', 'r')
+    moods_accessible = file_accessible('moods.txt', 'r')
 
-    if dooshlist_accessible == True and tool_list_accessible == True:
-        print("The necessary list files exists in this directory.")
-    elif dooshlist_accessible == False and tool_list_accessible == False:
-        print("\nTo use this file, you need to create two support files.")
-        time.sleep(2)
-        print("You need to create a txt file named 'dooshlist.txt' and another named tool_list.txt.")
-        print("Put them in this directory and load them up, one item per line.")
+    if dooshlist_accessible == False:
+        print("You need to create a txt file named \'dooshlist.txt\' in this directory.")
         exit(0)
 
-    elif dooshlist_accessible == True and tool_list_accessible == False:
-        print("To use this file you need to create a txt file named 'tool_list.txt'.")
-        time.sleep(2.5)
-        print("Put that file in the same directory as this file and add one whacking tool per line.")
-        time.sleep(2)
-        print("The more the merrier.")
-        exit(0)
-
-    elif dooshlist_accessible == False and tool_list_accessible == True:
-        print("To use this file you need to create a txt file named 'dooshlist.txt'.")
-        time.sleep(2.5)
-        print("Put that file in the same directory as this file and add one doosh per line.")
-        time.sleep(2)
-        print("The more the merrier.")
-        exit(0)
     else:
-        print("File accessibility test failure")
+        print("\'dooshlist.txt\' exists in this directory.")
+
+    if tool_list_accessible == False:
+        print("You need to create a txt file named \'tool_list.txt\' in this directory.")
         exit(0)
+
+    else:
+        print("\'dooshlist.txt\' exists in this directory.")
+
+    if moods_accessible == False:
+        print("You need to create a txt file named \'moods.txt\' in this directory.")
+        exit(0)
+
+    else:
+        print("\'moods.txt\' exists in this directory.\n")
 
 def add_doosh(new_doosh):
     new_doosh = new_doosh + '\n'
@@ -123,7 +117,7 @@ def status_generator():
 
     return random_status1, random_status2, status1_initials, status2_initials
 # ---------------------------------------------------------------
-# check_if_files_exist()
+
 def dream():
     random_word = word_generator()
     global sketchy_friend
@@ -398,4 +392,5 @@ def popup2(whack, tool, status, drunkenness):
     print("The end.")
     exit(0)
 
+check_if_files_exist()
 dream()
