@@ -4,15 +4,26 @@ from sys import exit
 from random import choice, randint
 import os
     # make a list of dooshbags from dooshlist.txt filed
-
+global your_name
 global tool_list
 global tool_to_check
 global word_list
 global friend_types
 global friend_type
+global quip_list
+global sloshed_walk
+global buzzed_walk
+global none_walk
+global snake_descriptors
 
-word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
-friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate"]
+quip_list = ["", "", "You are going to regret picking this one.", "How dumb are you to pick the this option?", "Lucky choice.", "Better luck next time."]
+snake_descriptors = ["hungry", "hissing", "slithering", "friendly", "comedic", "pancake-flipping", "deadly"]
+word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "a job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
+friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
+none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing"]
+buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "scamper"]
+sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke"]
+
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -67,6 +78,14 @@ def add_tool(new_tool):
 def word_generator():
     random_word = choice(word_list)
     return random_word
+
+def tool_pick_quip():
+    random_quip = choice(quip_list)
+    return random_quip
+
+def snake_word_generator():
+    snake_word = choice(snake_descriptors)
+    return snake_word
 
 def friend_type_generator():
     friend_type = choice(friend_types)
@@ -126,18 +145,20 @@ def status_generator():
 # ---------------------------------------------------------------
 
 def dream():
+    global your_name
+    your_name = input("What is your name: ")
     random_word = word_generator()
     friend_type = friend_type_generator()
     global friend_name
-    friend_name = input(f"Who is your {friend_type} friend?   ")
+    friend_name = input(f"{your_name}, who is your {friend_type} friend?   ")
     joke = rand_joke()
     print(joke)
-    print(f"\nAfter a {random_word} day at work you go out on the town with {friend_name}.\n")
+    print(f"\nAfter {random_word} day at work, {your_name} and {friend_name} go out for a night on the town.\n")
     time.sleep(2.5)
     drinks()
 
 def drinks():
-    booze = input(f"How many drinks did you have with {friend_name}?  ")
+    booze = input(f"{your_name}, how many drinks did you have with {friend_name}?  ")
     global drunkenness
     goldnum = []
     a = ""
@@ -147,43 +168,49 @@ def drinks():
     cooked = a.join(goldnum)
     n = len(cooked)
     if n == 0:
-        print("\nInclude a number in your answer, dumbass.")
+        print(f"\nInclude a number in your answer, {your_name}.")
         drinks()
     elif int(cooked) < 0:
         print("\nYo! Enter a number greater than zero.")
         drinks()
     elif int(cooked) == 0:
         drunkenness = "none"
+        drunkwalk = choice(none_walk_list)
     elif int(cooked) < 5:
         drunkenness = "buzzed"
+        drunkwalk = choice(buzzed_walk_list)
     elif int(cooked) >= 5:
         drunkenness = "sloshed"
+        drunkwalk = choice(sloshed_walk_list)
     else:
         print("Code problem calculating drunk conditional")
         exit(0)
     print(f"After you have {cooked} drinks with {friend_name}, you fall into a deep sleep and begin to dream.\n")
     time.sleep(2.5)
     arcade_descriptor = word_generator()
-    print(f"You find yourself at {arcade_descriptor} old school arcade room.\n")
+    print(f"You {drunkwalk} down a long stairs to {arcade_descriptor} old school arcade room.\n")
     time.sleep(2)
 
-    print("In front of you is the game of Celebrity Dooshbag Whackamole.\n")
+    print(f"In front of you, {your_name}, is the game of Celebrity Dooshbag Whackamole.\n")
     time.sleep(2.5)
 
     print(f"{friend_name} is laughing at you to \'select your whacking tool.\'\n")
     time.sleep(3)
-    print("You will receive three whacking tool options, picking yes or no, one at a time.\n")
+    print("{your_name}, you will receive three whacking tool options, picking yes or no, one at a time.\n")
     #time.sleep(2.5)
     tool_pick(drunkenness)
 
 def tool_pick(drunkenness):
     random_tool, tool_initials = tool_generator()
-    your_pick = input(f"Your first whacking option is a {random_tool}. Do you take this whacking tool?\ny) yes\nn) no\n>>> ")
+    your_pick = input(f"Your first whacking option is a {random_tool}. Do you take this whacking tool, {your_name}?\ny) yes\nn) no\n>>> \n")
 
     # print(f"your_pick is \'{your_pick}\'.") #debug
     if your_pick == "y" or your_pick == "yes":
+        quip = tool_pick_quip()
+        time.sleep(2)
+        print(quip)
         random_status1, random_status2, status1_initials, status2_initials = status_generator()
-        print(f"\n\nChose one: \n{random_status1} {random_tool} ({status1_initials})")
+        print(f"\n\nChose one, {your_name}: \n{random_status1} {random_tool} ({status1_initials})")
         print(f"{random_status2} {random_tool} ({status2_initials})")
         status_answer = input("\n >>> ")
         if status_answer == status1_initials:
@@ -208,9 +235,10 @@ def check_tool(tool_to_check):
         return random_tool2, tool_initial2
 
 def rand_joke():
-    a = randint(0, 20)
+    a = randint(0, 19)
     if a == 0:
-        return "We checked your references and it seems you have no friends. We'll pretend you do have one."
+        # Pops up about 5% of the time.
+        return f"{your_name}, we checked your references and it seems you have no friends. We'll let you keep pretending you do have one."
     else:
         return ""
 
@@ -221,7 +249,11 @@ def second_tool(drunkenness):
     check_tool(random_tool2)
 #    time.sleep(2)
 
-    your_pick = input(f"\nYour second whacking tool option is a {random_tool2}. Do you take this whacking tool?\ny) yes\nn) no\n>>> ")
+    your_pick = input(f"\nYour second whacking tool option is a {random_tool2}. Do you take this whacking tool?\ny) yes\nn) no\n>>> \n")
+    time.sleep(2)
+    quip = tool_pick_quip()
+    print(quip)
+    time.sleep(2)
 
     #print(f"your_pick is \'{your_pick}\'.") #debug
     if your_pick == "y" or your_pick == "yes":
@@ -240,6 +272,7 @@ def second_tool(drunkenness):
             exit(0)
         smack(random_tool2, status, drunkenness)
     elif your_pick == "n" or your_pick == "no":
+
         snake_tool(drunkenness)
     else:
         print("Dude, wtf? Try again.\n")
@@ -298,6 +331,10 @@ def sloshedwhack(whack, tool, status):
         b = input("Your new whacking tool:  ")
         add_tool(b)
         tool = b
+        status_1 , status_2, y, z = status_generator()
+        new_status = [status_1, status_2]
+        status = choice(new_status)
+        print("Good luck with your new {status} {tool}.")
         popup2('Chuck Norris', tool, status, drunkenness)
 
     else:
@@ -321,6 +358,10 @@ def buzzedwhack(whack, tool, status):
         b = input("Your new whacking tool:  ")
         add_tool(b)
         tool = b
+        status_1 , status_2, y, z = status_generator()
+        new_status = [status_1, status_2]
+        status = choice(new_status)
+        print("Good luck with your new {status} {tool}.")
         popup2(random_doosh, tool, status, drunkenness)
 
     elif whack == "cn":
@@ -366,25 +407,21 @@ def snake_tool(drunkenness):
     # print("You have arrived at the snake_tool function.") #debug
     time.sleep(1)
     get_snake, snake_initials = snake_generator()
+    status = snake_word_generator()
     print(f"\nCongratulations!")
     time.sleep(2)
-    print(f"You have won the opportunity to do your whacking with a deadly {get_snake}.\n")
+    print(f"You have won the opportunity to do your whacking with a {status} {get_snake}.\n")
     time.sleep(2.5)
-    snake_type = input(f"Pick one:\nh) hungry {get_snake}\na) angry {get_snake}\n>>> ")
-
-    if snake_type == "h" or snake_type == "hungry":
-        smack(get_snake, "hungry", drunkenness)
-    elif snake_type == "a" or snake_type == "angry":
-        smack(get_snake, "angry", drunkenness)
-    else:
-        smack(get_snake, "dipshit", drunkenness)
+    smack(get_snake, status, drunkenness)
 
 def popup2(whack, tool, status, drunkenness):
+    whack_initials = initial_maker(whack)
     print("You have arrived at popup2 function.\n") #debug
     print(f"Arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}\n")
     level2_doosh, ldi = doosh_generator()
     time.sleep(2)
-    print(f"{level2_doosh} pops up through a new hole, along with {whack} who is still there.\n")
+    print(f"{level2_doosh} pops up through a new hole.\n")
+    whack = input(f"Who do you whack?\n{ldi}) {level2_doosh}\n{whack_initials}) {whack}\n>>> \n")
     time.sleep(3)
     if status == "short" or status != "melted":
         print(f"You try to whack, but your {tool} is totally worthless for whacking.\n")
@@ -393,7 +430,8 @@ def popup2(whack, tool, status, drunkenness):
         exit(0)
     elif whack == "Chuck Norris":
         print(f"Chuck Norris is mad. He roundhouse kicks you, {level2_doosh}, your {status} {tool},\n")
-        print("the Whackamole table, the arcade, and the rest of the city.")
+        time.sleep(1.5)
+        print("the Whackamole table, the arcade, and the rest of the city.\n")
         time.sleep(3)
         print("Let's just say you will not wake up feeling refreshed.")
         exit(0)
