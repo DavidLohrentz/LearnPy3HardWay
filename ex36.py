@@ -1,15 +1,18 @@
 # Whackamole
 import time
 from sys import exit
-from random import choice
+from random import choice, randint
 import os
     # make a list of dooshbags from dooshlist.txt filed
 
 global tool_list
 global tool_to_check
 global word_list
+global friend_types
+global friend_type
 
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
+friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -64,6 +67,10 @@ def add_tool(new_tool):
 def word_generator():
     random_word = choice(word_list)
     return random_word
+
+def friend_type_generator():
+    friend_type = choice(friend_types)
+    return friend_type
 
 def doosh_generator():
     mylist = open("dooshlist.txt").readlines()
@@ -120,13 +127,17 @@ def status_generator():
 
 def dream():
     random_word = word_generator()
-    global sketchy_friend
-    sketchy_friend = input("Who is your sketchiest friend?   ")
-    print(f"\nAfter {random_word} day at work you go out on the town with {sketchy_friend}.\n")
+    friend_type = friend_type_generator()
+    global friend_name
+    friend_name = input(f"Who is your {friend_type} friend?   ")
+    joke = rand_joke()
+    print(joke)
+    print(f"\nAfter a {random_word} day at work you go out on the town with {friend_name}.\n")
     time.sleep(2.5)
     drinks()
+
 def drinks():
-    booze = input(f"How many drinks did you have with {sketchy_friend}?  ")
+    booze = input(f"How many drinks did you have with {friend_name}?  ")
     global drunkenness
     goldnum = []
     a = ""
@@ -150,7 +161,7 @@ def drinks():
     else:
         print("Code problem calculating drunk conditional")
         exit(0)
-    print(f"After you have {cooked} drinks with {sketchy_friend}, you fall into a deep sleep and begin to dream.\n")
+    print(f"After you have {cooked} drinks with {friend_name}, you fall into a deep sleep and begin to dream.\n")
     time.sleep(2.5)
     arcade_descriptor = word_generator()
     print(f"You find yourself at {arcade_descriptor} old school arcade room.\n")
@@ -159,7 +170,7 @@ def drinks():
     print("In front of you is the game of Celebrity Dooshbag Whackamole.\n")
     time.sleep(2.5)
 
-    print(f"{sketchy_friend} is laughing at you to \'select your whacking tool.\'\n")
+    print(f"{friend_name} is laughing at you to \'select your whacking tool.\'\n")
     time.sleep(3)
     print("You will receive three whacking tool options, picking yes or no, one at a time.\n")
     #time.sleep(2.5)
@@ -195,6 +206,13 @@ def check_tool(tool_to_check):
         return random_tool2, tool_initial2
     else:
         return random_tool2, tool_initial2
+
+def rand_joke():
+    a = randint(0, 20)
+    if a == 0:
+        return "We checked your references and it seems you have no friends. We'll pretend you do have one."
+    else:
+        return ""
 
 def second_tool(drunkenness):
     # print("\nYou have arrived at second_tool function.") # debug
@@ -363,10 +381,10 @@ def snake_tool(drunkenness):
 
 def popup2(whack, tool, status, drunkenness):
     print("You have arrived at popup2 function.\n") #debug
-    print(f"Arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}")
+    print(f"Arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}\n")
     level2_doosh, ldi = doosh_generator()
     time.sleep(2)
-    print(f"{level2_doosh} pops up through a new hole, along with {whack} who is still there.")
+    print(f"{level2_doosh} pops up through a new hole, along with {whack} who is still there.\n")
     time.sleep(3)
     if status == "short" or status != "melted":
         print(f"You try to whack, but your {tool} is totally worthless for whacking.\n")
