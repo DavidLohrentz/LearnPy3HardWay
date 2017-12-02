@@ -20,9 +20,9 @@ quip_list = ["", "", "You are going to regret picking this one.", "How dumb are 
 snake_descriptors = ["hungry", "hissing", "slithering", "friendly", "comedic", "pancake-flipping", "deadly"]
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "a job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
 friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
-none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing"]
-buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "scamper"]
-sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke"]
+none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing", "saunter", "meander", "mosey", "stroll"]
+buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwwalk", "scamper", "strut", "sashay"]
+sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder"]
 
 
 def file_accessible(filepath, mode):
@@ -146,7 +146,7 @@ def status_generator():
 
 def dream():
     global your_name
-    your_name = input("What is your name: ")
+    your_name = ask_name()
     random_word = word_generator()
     friend_type = friend_type_generator()
     global friend_name
@@ -278,6 +278,13 @@ def second_tool(drunkenness):
         print("Dude, wtf? Try again.\n")
         second_tool(drunkenness)
 
+def ask_name():
+    name_ask = input("Hit return if your name is \'David\'.\n")
+    if name_ask == "":
+        name_ask = "David"
+    else:
+        name_ask = input("What is your name?  \n")
+    return name_ask
 
 def smack(tool, status, drunkenness):
     global initials
@@ -361,7 +368,7 @@ def buzzedwhack(whack, tool, status):
         status_1 , status_2, y, z = status_generator()
         new_status = [status_1, status_2]
         status = choice(new_status)
-        print("Good luck with your new {status} {tool}.")
+        print(f"Good luck with your new {status} {tool}.")
         popup2(random_doosh, tool, status, drunkenness)
 
     elif whack == "cn":
@@ -421,13 +428,27 @@ def popup2(whack, tool, status, drunkenness):
     level2_doosh, ldi = doosh_generator()
     time.sleep(2)
     print(f"{level2_doosh} pops up through a new hole.\n")
-    whack = input(f"Who do you whack?\n{ldi}) {level2_doosh}\n{whack_initials}) {whack}\n>>> \n")
+    pick_one = input(f"Who do you whack?\n{ldi}) {level2_doosh}\n{whack_initials}) {whack}\n>>> \n")
+    if pick_one == ldi:
+        whack = level2_doosh
+    else:
+        print(f"whack is {whack}")
+    print(f"vales after 2nd pick: whack: {whack}, tool: {tool}, status {status}, drunkenness: {drunkenness}: ")
     time.sleep(3)
-    if status == "short" or status != "melted":
+    if status == "short":
         print(f"You try to whack, but your {tool} is totally worthless for whacking.\n")
         time.sleep(2)
-        print(f"{level2_doosh} and {whack} chew off your fingers, and you will never whack again.")
+        print(f"{whack} chews off your fingers, and you will never whack again.")
         exit(0)
+
+    elif status == "melted":
+        print(f"Your {status} {tool} has run down your arm and turned into a hard protective coating.\n")
+        time.sleep(2)
+        print(f"You are impervious to everything {whack} attempts to do to you.")
+        time.sleep(2)
+        print(f"{level2_doosh} and {whack} run away and you are now the winner.")
+        exit(0)
+
     elif whack == "Chuck Norris":
         print(f"Chuck Norris is mad. He roundhouse kicks you, {level2_doosh}, your {status} {tool},\n")
         time.sleep(1.5)
@@ -435,18 +456,12 @@ def popup2(whack, tool, status, drunkenness):
         time.sleep(3)
         print("Let's just say you will not wake up feeling refreshed.")
         exit(0)
-    elif whack == {level2_doosh}:
+
+    else:
         print(f"{level2_doosh} convinces you to take up Gandhian nonviolence rather than whacking your way through life with a {status} {tool}.")
         print(f"You put down your {status} {tool}, and never pick up another one as long as you live.")
         exit(0)
-    elif status != "short" or status != "melted":
-        print("Something something")
-        exit(0)
 
-    else:
-        exit(0)
-    print("The end.")
-    exit(0)
 
 check_if_files_exist()
 dream()
