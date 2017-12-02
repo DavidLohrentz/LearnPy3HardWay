@@ -36,7 +36,7 @@ def check_if_files_exist():
         exit(0)
 
     else:
-        print("\'dooshlist.txt\' exists in this directory.")
+        print("\'tool_list.txt\' exists in this directory.")
 
     if moods_accessible == False:
         print("You need to create a txt file named \'moods.txt\' in this directory.")
