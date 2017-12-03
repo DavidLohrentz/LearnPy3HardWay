@@ -16,13 +16,17 @@ global buzzed_walk
 global none_walk
 global snake_descriptors
 
+
 quip_list = ["", "", "You are going to regret picking this one.", "How dumb are you to pick the this option?", "Lucky choice.", "Better luck next time."]
 snake_descriptors = ["hungry", "hissing", "slithering", "friendly", "comedic", "pancake-flipping", "deadly"]
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "a job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
 friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
 none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing", "saunter", "meander", "mosey", "stroll"]
-buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwwalk", "scamper", "strut", "sashay"]
+buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder"]
+none_pause = ["tie your shoes", "write down an outline of your new novel", "clean the dogshit from your shoes", "turn your rally cap inside out"]
+buzzed_pause = ["hug {friend_name}", "sing the national anthem", "take a selfie", "make an omelette"]
+sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore."]
 
 
 def file_accessible(filepath, mode):
@@ -176,12 +180,15 @@ def drinks():
     elif int(cooked) == 0:
         drunkenness = "none"
         drunkwalk = choice(none_walk_list)
+        pause_do = choice(none_pause)
     elif int(cooked) < 5:
         drunkenness = "buzzed"
         drunkwalk = choice(buzzed_walk_list)
+        pause_do = choice(buzzed_pause)
     elif int(cooked) >= 5:
         drunkenness = "sloshed"
         drunkwalk = choice(sloshed_walk_list)
+        pause_do = choice(sloshed_pause)
     else:
         print("Code problem calculating drunk conditional")
         exit(0)
@@ -189,6 +196,10 @@ def drinks():
     time.sleep(2.5)
     arcade_descriptor = word_generator()
     print(f"You {drunkwalk} down a long stairs to {arcade_descriptor} old school arcade room.\n")
+    time.sleep(2)
+    print(f"Half way down the stairs you pause to {pause_do}.")
+    time.sleep(1.5)
+    print("You get to the bottom of the stairs, and open the green door.")
     time.sleep(2)
 
     print(f"In front of you, {your_name}, is the game of Celebrity Dooshbag Whackamole.\n")
@@ -423,17 +434,16 @@ def snake_tool(drunkenness):
 
 def popup2(whack, tool, status, drunkenness):
     whack_initials = initial_maker(whack)
-    print("You have arrived at popup2 function.\n") #debug
-    print(f"Arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}\n")
+    print(f"Popup2 arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}\n")
     level2_doosh, ldi = doosh_generator()
     time.sleep(2)
     print(f"{level2_doosh} pops up through a new hole.\n")
-    pick_one = input(f"Who do you whack?\n{ldi}) {level2_doosh}\n{whack_initials}) {whack}\n>>> \n")
+    pick_one = input(f"Who do you whack?\n{level2_doosh} ({ldi})\n{whack} ({whack_initials})\n>>> \n")
     if pick_one == ldi:
         whack = level2_doosh
     else:
         print(f"whack is {whack}")
-    print(f"vales after 2nd pick: whack: {whack}, tool: {tool}, status {status}, drunkenness: {drunkenness}: ")
+    print(f"values after 2nd pick: whack: {whack}, tool: {tool}, status {status}, drunkenness: {drunkenness}: ")
     time.sleep(3)
     if status == "short":
         print(f"You try to whack, but your {tool} is totally worthless for whacking.\n")
@@ -459,7 +469,8 @@ def popup2(whack, tool, status, drunkenness):
 
     else:
         print(f"{level2_doosh} convinces you to take up Gandhian nonviolence rather than whacking your way through life with a {status} {tool}.")
-        print(f"You put down your {status} {tool}, and never pick up another one as long as you live.")
+        time.sleep(2)
+        print(f"\nYou put down your {status} {tool}, and never pick up another one as long as you live.")
         exit(0)
 
 
