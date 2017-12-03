@@ -27,7 +27,7 @@ sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder",
 none_pause = ["tie your shoes", "write down an outline of your new novel", "clean the dogshit from your shoes", "turn your rally cap inside out"]
 buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette"]
 sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore."]
-
+snake_list = ["rattlesnake", "king cobra", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -125,8 +125,7 @@ def tool_generator():
     return random_tool, tool_initials
 
 def snake_generator():
-    snake_list = ["rattlesnake", "king cobra", "black mamba", "death adder", "puff adder", "spitting cobra",
-    "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
+
     global random_snake
     random_snake = choice(snake_list)
     snake_initials = initial_maker(random_snake)
@@ -316,10 +315,9 @@ def smack(tool, status, drunkenness):
         print(f"{random_doosh} and Chuck Norris take away your {tool} and whack you until you have no arms or legs.\n")
         exit(0)
 
-    elif any(status in s for s in snake_descriptors):
-        print("You chose a snake.")
-        # need to flesh this out.
-        exit(0)
+    elif any(tool in s for s in snake_list):
+        print(f"Your {tool} bites Chuck Norrris in the face and that was that.")
+        popup2(random_doosh, tool, status, drunkenness)
 
     elif drunkenness == "sloshed":
         sloshedwhack(whack, tool, status)
