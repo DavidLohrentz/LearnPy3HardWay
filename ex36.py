@@ -138,7 +138,7 @@ def status_generator():
     global random_status1
     global random_status2
 
-    status_list = [["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
+    status_list = [["highfalutin", "under-rated"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
     random_status = choice(status_list)
     random_status1 = random_status[0]
     random_status2 = random_status[1]
@@ -315,12 +315,21 @@ def smack(tool, status, drunkenness):
         time.sleep(2)
         print(f"{random_doosh} and Chuck Norris take away your {tool} and whack you until you have no arms or legs.\n")
         exit(0)
+
+    elif any(status in s for s in snake_descriptors):
+        print("You chose a snake.")
+        # need to flesh this out.
+        exit(0)
+
     elif drunkenness == "sloshed":
         sloshedwhack(whack, tool, status)
+
     elif drunkenness == "buzzed":
         buzzedwhack(whack, tool, status)
+
     elif drunkenness == "none":
         teetotalwhack(whack, tool, status)
+
     else:
         print("Drunk error")
         exit(0)
@@ -445,10 +454,18 @@ def popup2(whack, tool, status, drunkenness):
         print(f"whack is {whack}")
     print(f"values after 2nd pick: whack: {whack}, tool: {tool}, status {status}, drunkenness: {drunkenness}: ")
     time.sleep(3)
+
+
     if status == "short":
         print(f"You try to whack, but your {tool} is totally worthless for whacking.\n")
         time.sleep(2)
         print(f"{whack} chews off your fingers, and you will never whack again.")
+        exit(0)
+
+    elif tool == "banana":
+        print(f"Before you can lift your arm, King Kong appears out of nowhere, takes your banana and crushes you.\n")
+        time.sleep(2)
+        print(f"For good measure, King Kong devours {whack} as well. Good Night")
         exit(0)
 
     elif status == "melted":
