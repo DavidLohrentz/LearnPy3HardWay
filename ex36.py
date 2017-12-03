@@ -25,7 +25,7 @@ none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing",
 buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder"]
 none_pause = ["tie your shoes", "write down an outline of your new novel", "clean the dogshit from your shoes", "turn your rally cap inside out"]
-buzzed_pause = ["hug {friend_name}", "sing the national anthem", "take a selfie", "make an omelette"]
+buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette"]
 sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore."]
 
 
@@ -207,7 +207,7 @@ def drinks():
 
     print(f"{friend_name} is laughing at you to \'select your whacking tool.\'\n")
     time.sleep(3)
-    print("{your_name}, you will receive three whacking tool options, picking yes or no, one at a time.\n")
+    print(f"{your_name}, you will receive three whacking tool options, picking yes or no, one at a time.\n")
     #time.sleep(2.5)
     tool_pick(drunkenness)
 
@@ -456,7 +456,7 @@ def popup2(whack, tool, status, drunkenness):
         time.sleep(2)
         print(f"You are impervious to everything {whack} attempts to do to you.")
         time.sleep(2)
-        print(f"{level2_doosh} and {whack} run away and you are now the winner.")
+        print(f"{level2_doosh} runs away, whimpering.")
         exit(0)
 
     elif whack == "Chuck Norris":
@@ -467,11 +467,31 @@ def popup2(whack, tool, status, drunkenness):
         print("Let's just say you will not wake up feeling refreshed.")
         exit(0)
 
+    elif drunkenness == "none":
+        print("Well done.")
+        third_whack()
+
+    elif drunkenness == "sloshed":
+        message = word_generator()
+        print(f"You are {message} drunk.\n")
+        time.sleep(2)
+        print("You must be from Wisconsin. Better luck next time.")
+        exit(0)
+
     else:
         print(f"{level2_doosh} convinces you to take up Gandhian nonviolence rather than whacking your way through life with a {status} {tool}.")
         time.sleep(2)
         print(f"\nYou put down your {status} {tool}, and never pick up another one as long as you live.")
         exit(0)
+
+def third_whack():
+
+    level3_doosh, l3i = doosh_generator()
+    time.sleep(2)
+    print(f"{level3_doosh} pops up through a new hole.\n")
+    pick_one = input(f"Do you intend to whack {level3_doosh}? \n(y) (yes) \n(n) (no)\n>>> ")
+    time.sleep(2)
+    print("That was the winning answer. Go have a whackless life.")
 
 
 check_if_files_exist()
