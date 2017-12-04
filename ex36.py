@@ -17,6 +17,8 @@ global sloshed_walk
 global buzzed_walk
 global none_walk
 global snake_descriptors
+global scary_things
+global scary_activities
 
 
 # The code pulls random words from these lists to change the story every time
@@ -33,6 +35,8 @@ sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart"
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible", "a solid gold"]
 status_list = [["highfalutin", "under-rated"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
+scary_things = ["an alien", "an Alabama Senator", "a rogue park ranger", "a shady real estate developer", "a conehead", "a handsy news anchor", "a mobster"]
+scary_activities = ["probe you", "narfle the garthok", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -109,6 +113,14 @@ def snake_word_generator():
     snake_word = choice(snake_descriptors)
     return snake_word
 
+def scary_thing_generator():
+    sc_thing = choice(scary_things)
+    return sc_thing
+
+def scary_act_generator():
+    sc_activities = choice(scary_activities)
+    return sc_activities
+
 def friend_type_generator():
     friend_type = choice(friend_types)
     return friend_type
@@ -148,6 +160,13 @@ def tool_generator():
     get_tool.close()
 
     return random_tool, tool_initials
+
+def go_get_words():
+        # arcade_descriptor = word_generator()
+        scary_thingy = scary_thing_generator()
+        what_scary_thing_does = scary_act_generator()
+        what_kind_of_door = door_type()
+        return scary_thingy, what_scary_thing_does, what_kind_of_door
 
 def snake_generator():
 
@@ -217,13 +236,16 @@ def drinks():
         exit(0)
     print(f"After you have {cooked} drinks with {friend_name}, you fall into a deep sleep and begin to dream.\n")
     time.sleep(2.5)
-    arcade_descriptor = word_generator()
+    s_word, activity, door_word = go_get_words()
     print(f"You {drunkwalk} down a very long stairs into the darkness.\n")
     time.sleep(2)
     print(f"Half way down the stairs you pause to {pause_do}.\n")
+    time.sleep(3)
+    print(f"Before you can finish, {s_word} attempts to {activity}.\n")
+    # print(f"s_word = {s_word}")
     time.sleep(2)
-    door_word = door_type()
-    print(f"You get to the bottom of the stairs, and open {door_word} door.\n")
+
+    print(f"You fly down to the bottom of the stairs, and open {door_word} door.\n")
     time.sleep(2)
 
     print(f"In front of you, is the game of Celebrity Dooshbag Whackamole.\n")
@@ -386,7 +408,7 @@ def sloshedwhack(whack, tool, status):
 def buzzedwhack(whack, tool, status):
 
     if any(tool in s for s in snake_list):
-        print(f"Your {tool} bites Chuck Norrris in the face while it roundhouse kicks your {tool}. They are both dead.")
+        print(f"Your {tool} bites Chuck Norrris in the face while he roundhouse kicks your {tool}. They are both dead.\n")
         popup2(random_doosh, tool, "dead", drunkenness)
 
     elif whack == initials:
