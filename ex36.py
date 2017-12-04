@@ -1,4 +1,5 @@
-# Whackamole
+# Celebrity Whackamole game
+
 import time   # time.sleep(x) to pause during the playback
 from sys import exit
 from random import choice, randint # choice(listname) takes a random item from list
@@ -27,7 +28,7 @@ none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing",
 buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder"]
 none_pause = ["tie your shoes", "write down an outline of your new novel", "clean the dogshit from your shoes", "turn your rally cap inside out"]
-buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken"]
+buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken", "sign an autograph"]
 sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore."]
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible"]
