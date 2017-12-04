@@ -23,15 +23,15 @@ global snake_descriptors
 quip_list = ["", "", "WTF, Dude?", "You are going to regret picking this one.", "How dumb are you to pick this option?", "Lucky choice.", "Better luck next time."]
 snake_descriptors = ["hungry", "nocturnal", "hissing", "slithering", "friendly", "comedic", "pancake-flipping", "deadly", "cunning"]
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "a job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
-friend_types = ["sketchiest", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
-none_walk_list = ["wander", "tip-toe", "waltz", "amble", "romp", "yawn", "sing", "saunter", "meander", "mosey", "stroll"]
-buzzed_walk_list = ["dance", "frolic", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
-sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder"]
-none_pause = ["tie your shoes", "write down an outline of your new novel", "clean the dogshit from your shoes", "turn your rally cap inside out"]
+friend_types = ["sketchiest", "most eligible", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
+none_walk_list = ["wander", "tip-toe", "waltz", "unicycle", "amble", "romp", "yawn", "sing", "saunter", "meander", "mosey", "stroll"]
+buzzed_walk_list = ["dance", "frolic", "leap-frog", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
+sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder", "do the hokey-pokey"]
+none_pause = ["tie your shoes", "write down an outline of your new novel", "cross off an item on your bucket list", "clean the dogshit from your shoes", "turn your rally cap inside out"]
 buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken", "sign an autograph"]
-sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore."]
+sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore"]
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
-door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible"]
+door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible", "a solid gold"]
 status_list = [["highfalutin", "under-rated"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
 
 def file_accessible(filepath, mode):
@@ -40,35 +40,41 @@ def file_accessible(filepath, mode):
         f = open(filepath, mode)
         f.close()
     except IOError as e:
-        return False
+        return False       # should return false if file is not in same folder
 
-def check_if_files_exist():
+def check_if_files_exist(): # function to check if files exist
     dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
     tool_list_accessible = file_accessible('tool_list.txt', 'r')
     moods_accessible = file_accessible('moods.txt', 'r')
 
     if dooshlist_accessible == False:
-        print("You need to create a txt file named \'dooshlist.txt\' in this directory.")
+        print("""You need to create a txt file named \'dooshlist.txt\' in this directory.
+        Load it up with lots of dooshes; the more the merrier.""")
         exit(0)
 
     else:
         goodfiles = 1
 
     if tool_list_accessible == False:
-        print("You need to create a txt file named \'tool_list.txt\' in this directory.")
+        print("""You need to create a txt file named \'tool_list.txt\' in this directory.
+        Load it up with lots of whacking tools; one per line.""")
         exit(0)
 
     else:
         goodfiles += 1
 
     if moods_accessible == False:
-        print("You need to create a txt file named \'moods.txt\' in this directory.")
+        print("""You need to create a txt file named \'moods.txt\' in this directory.
+        Load it up with lots of moods.""")
         exit(0)
 
     else:
+        # print this if none of the file tests throw and error
         print("All three support files exist in this directory.\n\n")
 
+# function to take one argument and append to dooshlist
 def add_doosh(new_doosh):
+    # add return to the string that was passed
     new_doosh = new_doosh + '\n'
     f = 'dooshlist.txt'
     file = open(f, 'a+')
@@ -76,6 +82,7 @@ def add_doosh(new_doosh):
     file.close()
     return new_doosh
 
+# function to append string to tool_list.txt
 def add_tool(new_tool):
     new_tool = new_tool + '\n'
     f = 'tool_list.txt'
@@ -84,7 +91,9 @@ def add_tool(new_tool):
     file.close()
     return new_tool
 
+# random word generator from word_list list
 def word_generator():
+    # pull a random item from word_list and give it to random_word variable
     random_word = choice(word_list)
     return random_word
 
