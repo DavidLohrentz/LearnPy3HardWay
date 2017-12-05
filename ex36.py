@@ -1,5 +1,11 @@
 # Celebrity Whackamole game
 
+# To Do
+# Build a user file with name, workplace, best friend, silly crush, favorite food, greatest fear
+# If userfile has default values, ask user for this info; write to userfile
+# hit return that your name is equal to name in userfile
+# else overwrite values in userfile
+
 import time   # time.sleep(x) to pause during the playback
 from sys import exit
 from random import choice, randint # choice(listname) takes a random item from list
@@ -25,7 +31,7 @@ global scary_activities
 quip_list = ["", "", "WTF, Dude?", "You are going to regret picking this one.", "How dumb are you to pick this option?", "Lucky choice.", "Better luck next time."]
 snake_descriptors = ["hungry", "nocturnal", "hissing", "slithering", "friendly", "comedic", "pancake-flipping", "deadly", "cunning"]
 word_list = ["a demoralizing", "an exciting", "a sordid", "a discouraging", "an upsetting", "a soul-crushing", "a depressing", "a thrilling", "a dangerous", "a job-killing", "a sensational", "a rip-roaring", "an electrifying", "a titilating", "an arousing"]
-friend_types = ["sketchiest", "most eligible", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
+friend_types = ["sketchiest", "most eligible", "most farctate", "most excitable", "jumpiest", "ugliest", "most conspiratorial", "most doinkable", "most flamboyant", "weirdest", "most bizarre", "most desperate", "loneliest", "fishiest"]
 none_walk_list = ["wander", "tip-toe", "waltz", "unicycle", "amble", "romp", "yawn", "sing", "saunter", "meander", "mosey", "stroll"]
 buzzed_walk_list = ["dance", "frolic", "leap-frog", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder", "do the hokey-pokey"]
@@ -34,9 +40,9 @@ buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "m
 sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore"]
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible", "a solid gold"]
-status_list = [["highfalutin", "under-rated"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
+status_list = [["highfalutin", "under-rated"], ["fubsy", "druxy"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
 scary_things = ["an alien", "an Alabama Senator", "a rogue park ranger", "a shady real estate developer", "a conehead", "a handsy news anchor", "a mobster"]
-scary_activities = ["probe you", "narfle the garthok", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
+scary_activities = ["probe you", "narfle the garthok", "honeyfuggle you", "groak you", "defenestrate you", "light your hair on fire", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -252,7 +258,7 @@ def drinks():
     time.sleep(2)
 
     print(f"{friend_name} is laughing at you to \'select your whacking tool.\'\n")
-    time.sleep(3)
+    time.sleep(2)
     print(f"{your_name}, you will now receive three whacking tool options, picking yes or no, one at a time.\n")
     #time.sleep(2.5)
     tool_pick(drunkenness)
@@ -263,7 +269,7 @@ def tool_pick(drunkenness):
 
     if your_pick == "y" or your_pick == "yes":
         quip = tool_pick_quip()
-        time.sleep(2)
+        time.sleep(1)
         print(quip)
         random_status1, random_status2, status1_initials, status2_initials = status_generator()
         print(f"\n\nChoose one, {your_name}: \n{random_status1} {random_tool} ({status1_initials})")
@@ -505,15 +511,15 @@ def popup2(whack, tool, status, drunkenness):
     elif tool == "banana":
         print(f"Before you can lift your arm, King Kong appears out of nowhere, takes your banana and crushes you.\n")
         time.sleep(2)
-        print(f"For good measure, King Kong devours {whack} as well. Good Night")
+        print(f"For good measure, King Kong devours {whack} as well. Good Night.\n")
         exit(0)
 
     elif status == "melted":
-        print(f"Your {status} {tool} has run down your arm and turned into a hard protective coating.\n")
+        print(f"\nYour {status} {tool} is no longer effective as a whacking tool.\n")
         time.sleep(2)
-        print(f"You are impervious to everything {whack} attempts to do to you.")
+        print(f"However you run to the test-kitchen to try {status} {tool} pizza.\n")
         time.sleep(2)
-        print(f"{level2_doosh} runs away, whimpering.")
+        print(f"{level2_doosh} comes with you to try it out with you. Have fun!\n")
         exit(0)
 
     elif whack == "Chuck Norris":
