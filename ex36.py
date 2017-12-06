@@ -79,8 +79,9 @@ def check_if_files_exist(): # function to check if files exist
         exit(0)
 
     else:
-        # print this if none of the file tests throw and error
-        print("All three support files exist in this directory.\n\n")
+        # goodfiles should = 3 if none of the file tests throw an error
+        goodfiles += 1
+        print(f"{goodfiles}/3 support files exist in this directory.\n\n")
 
 # function to take one argument and append to dooshlist
 def add_doosh(new_doosh):
@@ -558,7 +559,7 @@ def third_whack():
     time.sleep(2)
     doosh_prize = input("Your prize is adding a dooshbag to the list: ")
     add_doosh(doosh_prize)
-    print(f"\nFor a successful life, continue to drink heavily and whack random celebrity dooshbags with a {status} {tool}.\n")
+    print(f"\nFor a successful life, continue to drink heavily and whack random celebrity dooshbags.\n")
     exit(0)
 
 
