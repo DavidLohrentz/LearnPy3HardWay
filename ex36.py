@@ -43,6 +43,7 @@ door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", 
 status_list = [["highfalutin", "under-rated"], ["fubsy", "druxy"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
 scary_things = ["an alien", "an Alabama Senator", "a rogue park ranger", "a shady real estate developer", "a conehead", "a handsy news anchor", "a mobster"]
 scary_activities = ["probe you", "narfle the garthok", "honeyfuggle you", "groak you", "defenestrate you", "light your hair on fire", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
+day_list = ["at work", "getting lost", "falling through the ice", "playing poker", "losing your wallet"]
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -111,6 +112,10 @@ def word_generator():
 def door_type():
     random_door = choice(door_list)
     return random_door
+
+def random_day():
+    rand_day = choice(day_list)
+    return rand_day
 
 def tool_pick_quip():
     random_quip = choice(quip_list)
@@ -205,53 +210,70 @@ def dream():
     global friend_name
     friend_name = input(f"{your_name}, who is your {friend_type} friend?   ")
     joke = rand_joke()
+    what_we_did = random_day()
     print(joke)
-    print(f"\nAfter {random_word} day at work, {your_name} and {friend_name} go out for a night on the town.\n")
+    print(f"\nAfter {random_word} day {what_we_did}, {your_name} and {friend_name} go out for a night on the town.\n")
     time.sleep(2.5)
     drinks()
 
 def drinks():
     booze = input(f"{your_name}, how many drinks did you have with {friend_name}?  \n")
     global drunkenness
+    # create an empty list
     goldnum = []
+    # create two empty string variables
     a = ""
+    b = 0
     for i in list(booze):
         if i.isdigit():
             goldnum.append(i)
+
+        else:
+            b += 1
+    # not an ideal solution
+    # if there are two or more numbers in the answer, this will combine them
+    # What it will do is pull out all of the numbers from booze and combine
     cooked = a.join(goldnum)
     n = len(cooked)
+    # if no digits, it will send back for another input
     if n == 0:
         print(f"\nInclude a number in your answer, {your_name}.")
         drinks()
-    elif int(cooked) < 0:
-        print("\nYo! Enter a number greater than zero.")
-        drinks()
+
     elif int(cooked) == 0:
         drunkenness = "none"
         drunkwalk = choice(none_walk_list)
         pause_do = choice(none_pause)
+
+    # 0 < cooked < 5 is defined as buzzed
     elif int(cooked) < 5:
         drunkenness = "buzzed"
         drunkwalk = choice(buzzed_walk_list)
         pause_do = choice(buzzed_pause)
+
+    # define 5 or more drinks as sloshed
     elif int(cooked) >= 5:
         drunkenness = "sloshed"
         drunkwalk = choice(sloshed_walk_list)
         pause_do = choice(sloshed_pause)
+
+    # should never get this far
     else:
         print("Code problem calculating drunk conditional")
         exit(0)
+
     print(f"After you have {cooked} drinks with {friend_name}, you fall into a deep sleep and begin to dream.\n")
     time.sleep(2.5)
+
+    # go_get_words calls three random word generators
     s_word, activity, door_word = go_get_words()
     print(f"You {drunkwalk} down a very long stairs into the darkness.\n")
     time.sleep(2)
     print(f"Half way down the stairs you pause to {pause_do}.\n")
     time.sleep(3)
     print(f"Before you can finish, {s_word} attempts to {activity}.\n")
-    # print(f"s_word = {s_word}")
-    time.sleep(2)
 
+    time.sleep(2)
     print(f"You fly down to the bottom of the stairs, and open {door_word} door.\n")
     time.sleep(2)
 
@@ -265,6 +287,7 @@ def drinks():
     tool_pick(drunkenness)
 
 def tool_pick(drunkenness):
+    # get a random tool from tool_list.txt
     random_tool, tool_initials = tool_generator()
     your_pick = input(f"Your first whacking option is a {random_tool}. Do you take this whacking tool, {your_name}?\ny) yes\nn) no\n>>> \n")
 
@@ -276,18 +299,28 @@ def tool_pick(drunkenness):
         print(f"\n\nChoose one, {your_name}: \n{random_status1} {random_tool} ({status1_initials})")
         print(f"{random_status2} {random_tool} ({status2_initials})")
         status_answer = input("\n >>> ")
+
         if status_answer == status1_initials:
             status = random_status1
+
         elif status_answer == status2_initials:
             status = random_status2
+
+        # anyone who picks erroniously is give a status of dipshit
         else:
             status = "dipshit"
+
         smack(random_tool, status, drunkenness)
+
     elif your_pick == "n" or your_pick == "no":
         second_tool(drunkenness)
+
+    # send them back to try again if they enter other than "y" or "n"
     elif your_pick != "n" and your_pick != "y":
         print("Dude, wtf? Try again.\n")
         tool_pick(drunkenness)
+
+    #should never get to else
     else:
         exit(0)
 
@@ -299,12 +332,15 @@ def check_tool(tool_to_check):
         return random_tool2, tool_initial2
 
 def rand_joke():
+    d = "we checked your references and it seems you have no friends. We'll let you keep pretending you do have one."
     a = randint(0, 19)
     if a == 10:
-        # Pops up about 5% of the time.
-        return "we checked your references and it seems you have no friends. We'll let you keep pretending you do have one."
+        # Should pop up about 5% of the time.
+        return d
+
     else:
-        return ""
+        d = ""
+        return d
 
 def second_tool(drunkenness):
     # print("\nYou have arrived at second_tool function.") # debug
@@ -344,10 +380,13 @@ def second_tool(drunkenness):
 
 def ask_name():
     name_ask = input("Hit return if your name is \'David\'.\n")
+
     if name_ask == "":
         name_ask = "David"
+
     else:
         name_ask = input("What is your name?  \n")
+
     return name_ask
 
 def smack(tool, status, drunkenness):
@@ -361,8 +400,6 @@ def smack(tool, status, drunkenness):
     print(f"There is something odd about {random_doosh}, who seems unusually {random_doosh_mood}.")
     time.sleep(2)
     whack = input(f"Who do you whack with your {tool}?\n{random_doosh_mood} {random_doosh} ({initials})\nChuck Norris (cn)\n>>> ")
-    # print(f"You whack {whack}.") #debug
-    print(f"\nWho is whack? {whack}.\n")
 
     if status == "dipshit":
         print("You failed to answer correctly. Let this be a lesson to you.")
@@ -384,6 +421,7 @@ def smack(tool, status, drunkenness):
         exit(0)
 
 def sloshedwhack(whack, tool, status):
+
     if whack == initials:
         print(f"You fall down drunk, narrowly avoiding a roundhouse kick from Chuck Norris.\n")
         time.sleep(2)
@@ -409,6 +447,7 @@ def sloshedwhack(whack, tool, status):
         popup2('Chuck Norris', tool, status, drunkenness)
 
     else:
+        # should never get here
         print('sloshed error')
         exit(0)
 
@@ -490,17 +529,16 @@ def snake_tool(drunkenness):
 
 def popup2(whack, tool, status, drunkenness):
     whack_initials = initial_maker(whack)
-    print(f"Popup2 arrival values: whack: {whack}, tool: {tool}, status: {status}, drunkenness {drunkenness}\n")
     level2_doosh, ldi = doosh_generator()
     time.sleep(2)
     print(f"{level2_doosh} pops up through a new hole.\n")
     pick_one = input(f"Who do you whack?\n{level2_doosh} ({ldi})\n{whack} ({whack_initials})\n>>> \n")
+
     if pick_one == ldi:
         whack = level2_doosh
+
     else:
         print(f"whack is {whack}")
-    print(f"values after 2nd pick: whack: {whack}, tool: {tool}, status {status}, drunkenness: {drunkenness}: ")
-    time.sleep(3)
 
 
     if status == "short":
@@ -545,6 +583,7 @@ def popup2(whack, tool, status, drunkenness):
     else:
         print(f"{level2_doosh} convinces you to take up Gandhian nonviolence rather than whacking your way through life with a {status} {tool}.\n")
         time.sleep(2)
+
         print(f"\nPut down your {status} {tool}, and never pick up another one as long as you live.")
         exit(0)
 
