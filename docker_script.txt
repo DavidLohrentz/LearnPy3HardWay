@@ -1,1 +1,1 @@
-sudo docker run -it --name learn-p --rm -v /home/david/Documents/LearnPy3HardWay:/var/opt python:3.6.3-alpine3.6 /bin/sh
+sudo docker run -it --name learn-p --rm -v /home/dloh/Documents/LearnPy3HardWay:/var/opt python:3.6.3-alpine3.6 /bin/sh
