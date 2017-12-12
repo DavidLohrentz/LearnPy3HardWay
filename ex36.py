@@ -36,13 +36,13 @@ none_walk_list = ["wander", "tip-toe", "waltz", "unicycle", "amble", "romp", "ya
 buzzed_walk_list = ["dance", "frolic", "leap-frog", "skip", "cartwheel", "prance", "duckwalk", "scamper", "strut", "sashay"]
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder", "do the hokey-pokey"]
 none_pause = ["tie your shoes", "write down an outline of your new novel", "cross off an item on your bucket list", "clean the dogshit from your shoes", "turn your rally cap inside out"]
-buzzed_pause = ["hug everybody", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken", "sign an autograph"]
+buzzed_pause = ["hug everybody", "practice Hamlet soliliquys", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken", "sign an autograph"]
 sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore"]
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible", "a solid gold"]
-status_list = [["highfalutin", "under-rated"], ["fubsy", "druxy"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
+status_list = [["highfalutin", "under-rated"], ["snarky", "rabid"], ["fubsy", "druxy"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
 scary_things = ["an alien", "an Alabama Senator", "a rogue park ranger", "a shady real estate developer", "a conehead", "a handsy news anchor", "a mobster"]
-scary_activities = ["probe you", "narfle the garthok", "honeyfuggle you", "groak you", "defenestrate you", "light your hair on fire", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
+scary_activities = ["probe you", "narfle the garthok", "taste your liver and fava beans", "honeyfuggle you", "groak you", "defenestrate you", "light your hair on fire", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
 day_list = ["at work", "getting lost", "falling through the ice", "playing poker", "losing your wallet"]
 
 def file_accessible(filepath, mode):
@@ -181,9 +181,8 @@ def go_get_words():
         return scary_thingy, what_scary_thing_does, what_kind_of_door
 
 def snake_generator():
-
     global random_snake
-    random_snake = choice(snake_list)
+    random_snake = choice(snake_list) #pull a random item from snake_list
     snake_initials = initial_maker(random_snake)
 
     return random_snake, snake_initials
