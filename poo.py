@@ -1,4 +1,4 @@
-
+# stupid piles of poo code
 x = 0
 iq = 10
 
