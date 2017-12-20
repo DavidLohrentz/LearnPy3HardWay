@@ -32,7 +32,7 @@ buzzed_walk_list = ["dance", "frolic", "leap-frog", "skip", "cartwheel", "prance
 sloshed_walk_list = ["stumble", "stagger", "crawl", "wobble", "lurch", "dodder", "puke", "flounder", "do the hokey-pokey"]
 none_pause = ["tie your shoes", "write down an outline of your new novel", "cross off an item on your bucket list", "clean the dogshit from your shoes", "turn your rally cap inside out"]
 buzzed_pause = ["hug everybody", "practice Hamlet soliliquys", "sing the national anthem", "take a selfie", "make an omelette", "start a fire", "pluck a chicken", "sign an autograph"]
-sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, I\'m mad as hell, and I\'m not going to take it anymore"]
+sloshed_pause = ["take a piss", "puke on your shoes", "launch a supersonic fart", "do a kegstand", "scream, \'I\'m mad as hell, and I\'m not going to take it anymore!\'"]
 snake_list = ["rattlesnake", "Copperhead", "king cobra", "mamushi", "black mamba", "death adder", "puff adder", "spitting cobra", "water moccasin", "Yellow Belly Sea Snake", "Inland Taipan", "Anaconda", "Tiger Snake"]
 door_list = ["a grungy", "a ramshackle", "an inviting", "a hidden", "a secret", "a disguised", "an invisible", "a solid gold"]
 status_list = [["highfalutin", "under-rated"], ["snarky", "rabid"], ["fubsy", "druxy"], ["turgid", "humble"], ["greasey", "slimey"], ["bloody", "poopy"], ["chocolate-covered", "beer-battered"], ["tiny", "gargantuan"], ["pink", "blue"], ["dirty", "rotten"], ["long", "short"], ["old", "kaput"], ["burning", "holey"], ["squirming", "biting"], ["creepy", "nauseating"], ["surly", "ticklish"], ["frisky", "lethargic"], ["raw", "cooked"], ["flat", "roundish"], ["epic", "dwarfish"], ["soft", "fragile"], ["bloated", "emaciated"], ["leaky", "ebola-tinged"], ["Russian", "Turkish"], ["operatic", "shrill"], ["wide", "narrow"]]
@@ -64,19 +64,18 @@ def file_accessible(filepath, mode):
 def get_username():
     config = configparser.ConfigParser()
     config.read('dooshbag.conf')
-    a_name = config['userdata']['username']
+    a_name = config['userdata']['username'] # get username value from .conf
 
     name_ask = input(f"Hit return if your name is \'{a_name}\'.\n")
 
     if name_ask == "":
-        # name_ask = a_name
-        return a_name
+        return a_name # use value in .conf file if user hits return
 
     else:
         name_ask = input("What is your name?  \n")
-
+        # Put new input value in .conf file
         config.set('userdata', 'username', name_ask)
-        # config['usesrdata']['username'] = {name_ask}
+        # save the file
         with open('dooshbag.conf', 'w') as configfile:
             config.write(configfile)
 
@@ -249,10 +248,12 @@ def dream():
     random_word = word_generator()
     friend_type = friend_type_generator()
     global friend_name
+
     friend_name = input(f"{your_name}, who is your {friend_type} friend?   ")
     joke = rand_joke()
+
     what_we_did = random_day()
-    print(joke)
+
     print(f"\nAfter {random_word} day {what_we_did}, {your_name} and {friend_name} go out for a night on the town.\n")
     time.sleep(2.5)
     drinks()
@@ -383,15 +384,14 @@ def check_tool(tool_to_check):
         return random_tool2, tool_initial2
 
 def rand_joke():
-    d = "we checked your references and it seems you have no friends. We'll let you keep pretending you do have one."
-    a = randint(0, 19)
-    if a == 10:
-        # Should pop up about 5% of the time.
-        return d
-
+    highside = 10
+    a = randint(1, highside)
+    if a == 2:
+        for i in range(1, highside):
+            print(f"\nTraceback Error! Line 69.\nWe checked your references and it seems you have no friends.\n")
+            time.sleep(1)
     else:
-        d = ""
-        return d
+        pass
 
 def second_tool(drunkenness):
     # print("\nYou have arrived at second_tool function.") # debug
