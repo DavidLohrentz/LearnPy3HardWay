@@ -1,15 +1,10 @@
 # Celebrity Whackamole game
 
-# To Do
-# Build a user file with name, workplace, best friend, silly crush, favorite food, greatest fear
-# If userfile has default values, ask user for this info; write to userfile
-# hit return that your name is equal to name in userfile
-# else overwrite values in userfile
-
 import time   # time.sleep(x) to pause during the playback
 from sys import exit
 from random import choice, randint # choice(listname) takes a random item from list
 import os
+import configparser
 
 # this should not be here, but is a dumb way of fixing errors
 global your_name
@@ -44,6 +39,19 @@ status_list = [["highfalutin", "under-rated"], ["snarky", "rabid"], ["fubsy", "d
 scary_things = ["an alien", "an Alabama Senator", "a rogue park ranger", "a shady real estate developer", "a conehead", "a handsy news anchor", "a mobster"]
 scary_activities = ["probe you", "narfle the garthok", "taste your liver and fava beans", "honeyfuggle you", "groak you", "defenestrate you", "light your hair on fire", "touch your hair", "shine your shoes", "launder your money", "pinch your cheek", "get your phone number", "sing a duet with you"]
 day_list = ["at work", "getting lost", "falling through the ice", "playing poker", "losing your wallet"]
+stairway = {
+    '0': 'very long',
+    '1': 'minitature',
+    '2': 'squeaky',
+    '3': 'winding',
+    '4': 'banana-peel-littered',
+    '5': 'M.C. Escher',
+    '6': 'dangerous',
+    '7': 'slippery',
+    '8': 'narrow',
+    '9': 'hidden',
+    '10': 'foggy'
+}
 
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
@@ -52,6 +60,30 @@ def file_accessible(filepath, mode):
         f.close()
     except IOError as e:
         return False       # should return false if file is not in same folder
+
+def get_username():
+    config = configparser.ConfigParser()
+    config.read('dooshbag.conf')
+    a_name = config['userdata']['username']
+
+    name_ask = input(f"Hit return if your name is \'{a_name}\'.\n")
+
+    if name_ask == "":
+        # name_ask = a_name
+        return a_name
+
+    else:
+        name_ask = input("What is your name?  \n")
+
+        config.set('userdata', 'username', name_ask)
+        # config['usesrdata']['username'] = {name_ask}
+        with open('dooshbag.conf', 'w') as configfile:
+            config.write(configfile)
+
+        configfile.close()
+        return name_ask
+
+
 
 def check_if_files_exist(): # function to check if files exist
     dooshlist_accessible = file_accessible('dooshlist.txt', 'r')
@@ -199,11 +231,21 @@ def status_generator():
     status2_initials = initial_maker(random_status2)
 
     return random_status1, random_status2, status1_initials, status2_initials
+
+def stair_word_generator(drink_num):
+    for drink_count, stair_words in list(stairway.items()):
+        if drink_count == drink_num:
+            return stair_words
+
+        else:
+            pass
+
+#    return stair_descriptor
 # ---------------------------------------------------------------
 
 def dream():
     global your_name
-    your_name = ask_name()
+    your_name = get_username()
     random_word = word_generator()
     friend_type = friend_type_generator()
     global friend_name
@@ -233,13 +275,23 @@ def drinks():
     # if there are two or more numbers in the answer, this will combine them
     # What it will do is pull out all of the numbers from booze and combine
     cooked = a.join(goldnum)
+
     n = len(cooked)
     # if no digits, it will send back for another input
     if n == 0:
         print(f"\nInclude a number in your answer, {your_name}.")
         drinks()
 
-    elif int(cooked) == 0:
+    elif int(cooked) > 10:
+        stairtype = 'crotchety'
+
+    elif int(cooked) > -1:
+        stairtype = stair_word_generator(cooked)
+
+    else:
+        stairtype = 'this should never be generated'
+
+    if int(cooked) == 0:
         drunkenness = "none"
         drunkwalk = choice(none_walk_list)
         pause_do = choice(none_pause)
@@ -266,7 +318,7 @@ def drinks():
 
     # go_get_words calls three random word generators
     s_word, activity, door_word = go_get_words()
-    print(f"You {drunkwalk} down a very long stairs into the darkness.\n")
+    print(f"You {drunkwalk} down a {stairtype} stairs into the darkness.\n")
     time.sleep(2)
     print(f"Half way down the stairs you pause to {pause_do}.\n")
     time.sleep(3)
@@ -377,16 +429,6 @@ def second_tool(drunkenness):
         print("Dude, wtf? Try again.\n")
         second_tool(drunkenness)
 
-def ask_name():
-    name_ask = input("Hit return if your name is \'David\'.\n")
-
-    if name_ask == "":
-        name_ask = "David"
-
-    else:
-        name_ask = input("What is your name?  \n")
-
-    return name_ask
 
 def smack(tool, status, drunkenness):
     global initials
@@ -394,7 +436,7 @@ def smack(tool, status, drunkenness):
     random_doosh, initials = doosh_generator()
     time.sleep(2)
     random_doosh_mood, a = mood_generator()
-    print(f"\nThe heads of {random_doosh} and Chuck Norris pop up from the Whackamole table.\n")
+    print(f"\nThe heads of {random_doosh} and Chuck Norris pop up from the Dooshbag Whackamole table.\n")
     time.sleep(2)
     print(f"There is something odd about {random_doosh}, who seems unusually {random_doosh_mood}.")
     time.sleep(2)
@@ -442,7 +484,7 @@ def sloshedwhack(whack, tool, status):
         status_1 , status_2, y, z = status_generator()
         new_status = [status_1, status_2]
         status = choice(new_status)
-        print("Good luck with your new {status} {tool}.")
+        print(f"Good luck with your new {status} {tool}.")
         popup2('Chuck Norris', tool, status, drunkenness)
 
     else:
