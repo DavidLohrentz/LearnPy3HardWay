@@ -53,6 +53,35 @@ stairway = {
     '10': 'foggy'
 }
 
+def drink_pick(friend):
+    drink_dict = {
+        'coffee': 'coffee-shop',
+        'tea': 'tea lounge',
+        'bong water': 'head shop',
+        'root beer': 'diner'}
+    drink_pref = input(f"""\nWould you rather go out for coffee, tea, bong water or a root beer with {friend}?
+    \n\ncoffee (c)\ntea (t)\nbong water (b)\nroot beer (r) \n""")
+    if drink_pref == 'c':
+        drink_pref = 'coffee'
+
+    elif drink_pref == 't':
+        drink_pref = 'tea'
+
+    elif drink_pref == 'b':
+        drink_pref = 'bong water'
+
+    elif drink_pref == 'r':
+        drink_pref = 'root beer'
+
+    else:
+        print("Wrong!\t" * 400000)
+        exit(0)
+
+    drink_place = drink_dict[(drink_pref)]
+    return drink_pref, drink_place
+
+
+
 def file_accessible(filepath, mode):
     # check if a file exists and is accessible.
     try:
@@ -253,8 +282,15 @@ def dream():
     joke = rand_joke()
 
     what_we_did = random_day()
+    print(f"\nAfter {random_word} day {what_we_did}, {your_name} and {friend_name} decide to go do something.\n")
 
-    print(f"\nAfter {random_word} day {what_we_did}, {your_name} and {friend_name} go out for a night on the town.\n")
+    wanna_drink, wanna_go = drink_pick(friend_name)
+    time.sleep(2)
+    print(f"You go to a {wanna_go} with {friend_name}, but they are all out of {wanna_drink}.\n")
+    time.sleep(2)
+    print("Instead, you decide to go to a bar.\n")
+
+
     time.sleep(2.5)
     drinks()
 
@@ -271,7 +307,7 @@ def drinks():
             goldnum.append(i)
 
         else:
-            b += 1
+            pass
     # not an ideal solution
     # if there are two or more numbers in the answer, this will combine them
     # What it will do is pull out all of the numbers from booze and combine
@@ -387,7 +423,8 @@ def rand_joke():
     highside = 10
     a = randint(1, highside)
     if a == 2:
-        for i in range(1, highside):
+        for i in range(1
+        , highside):
             print(f"\nTraceback Error! Line 69.\nWe checked your references and it seems you have no friends.\n")
             time.sleep(1)
     else:
