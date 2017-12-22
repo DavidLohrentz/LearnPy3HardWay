@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # Celebrity Whackamole game
 
 import time   # time.sleep(x) to pause during the playback
