@@ -132,7 +132,41 @@ class LaserWeaponArmory(Scene):
 class TheBridge(Scene):
 
     def Enter(self):
-        pass
+        print(dedent("""
+            You burtst on the the Bridge and yada, yada, yada.
+            Gothons are trying to take control of the ship.
+            WTF do you do?
+            """))
+
+        action = input("> ")
+
+        if action == "throw the bomb":
+            print(dedent("""
+                In a panic you throw the bomb.
+                A Gothon shoots you and you are dead.
+                You die knowing the bomb will kill them all.
+                """))
+            return 'death'
+
+        elif action == "throw up":
+            print(dedent("""
+                Wrong. The correct answer was 'retch on the Gothons'.
+                Next time use the parlance of our times.
+                """))
+            return 'death'
+
+        elif action == "slowly place the bomb":
+            print(dedent("""
+                You point your blaster at the bomb and yada, yada, yada . . .
+                run to the escape pod to get off this ship.
+                """))
+
+            return 'escape_pod'
+
+        else:
+            print("DOES NOT COMPUTE!")
+            return "the_bridge"
+
 
 class EscapePod(Scene):
 
